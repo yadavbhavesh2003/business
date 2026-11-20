@@ -47,7 +47,7 @@ All AI agents operating in this workspace must adhere strictly to the rules, inv
 ### B. Reason-Execute-Audit (REA)
 - **Reason**: Read source files before editing. Identify constraints and acceptance criteria upfront.
 - **Execute**: Make surgical, batched edits. Avoid collateral changes or cosmetic diff churn.
-- **Audit**: Immediately run verification commands (`verify_pipeline.py`). Verify diffs before finishing.
+- **Audit**: Immediately run verification commands (`npm test`, `npx vite build apps/web`). Verify diffs before finishing.
 
 ### C. Language & Bilingual Integrity
 - Gujarati strings must remain genuine Unicode (e.g. `ગુજરાતી`, `રૂ`, `ખાતાવહી`, `થાણ`). Never replace Gujarati text with transliterated roman script or placeholders.
@@ -70,25 +70,27 @@ All AI agents operating in this workspace must adhere strictly to the rules, inv
 
 ---
 
-## 4. Design Prototype Build & Export Protocol
+## 4. Monorepo Build & Verification Protocol
 
-When modifying or adding screens in `design/`:
+When modifying or adding features across `apps/` and `packages/`:
 
-1. **Screen Definitions**:
-   - Standard templated screens reside in `design/pages_*.py`.
-   - Custom, hand-crafted screens reside in `design/bespoke/`.
-   - Navigation links reside in `design/links.py`.
-   - Canvas layout positions reside in `design/layout.py`.
-
-2. **Rebuild Command**:
+1. **Testing Gate**:
    ```bash
-   cd /opt/lampp/htdocs/businessMitra/design
-   python3 gen.py out/project && cp bespoke/*.dc.html out/project/ && python3 layout.py out/project && python3 export.py
+   npm test
    ```
+   *Runs all 61+ unit, integration, and E2E sync tests across `@udyamos/core`, `@udyamos/api`, `@udyamos/web`, and `@udyamos/mobile`.*
 
-3. **Acceptance Gate**:
-   - The build output must confirm: `194 boards; files missing locally (already on server): []`.
-   - Zero broken links (`_missing`) permitted.
+2. **Web Production Bundle**:
+   ```bash
+   npx vite build apps/web
+   ```
+   *Must compile cleanly with zero Rollup/Vite errors.*
+
+3. **Backend Service**:
+   ```bash
+   node --experimental-strip-types apps/api/src/server.ts
+   ```
+   *Runs REST API on port 3000 connected to persistent ACID SQLite database (`apps/api/data/udyamos.sqlite`).*
 
 ---
 

@@ -27,6 +27,7 @@ import { Devices } from './client/settings/Devices.js';
 import { ThermalPrinterSetup } from './client/settings/ThermalPrinterSetup.js';
 import { UpiQrSetup } from './client/settings/UpiQrSetup.js';
 import { Users } from './client/settings/Users.js';
+import { GenericModuleView } from './client/GenericModuleView.js';
 
 // Platform Admin Views
 import { PlatformDashboard } from './platform/PlatformDashboard.js';
@@ -707,6 +708,18 @@ export const App: React.FC = () => {
               {activeScreenId === 'PlatformIncidents' && <PlatformIncidents />}
               {activeScreenId === 'PlatformPayouts' && <PlatformPayouts />}
               {activeScreenId === 'PlatformFlags' && <PlatformFlags />}
+
+              {/* Any other of the 194 Screens - Seamless Interactive Pure React View */}
+              {![
+                'Main', 'Invoices', 'InvoiceNew', 'Challans', 'ChallanConvert', 'CreditNotes',
+                'Quotations', 'Stock', 'Purchases', 'PurchaseNew', 'StockCount', 'Transfer',
+                'BarcodeLabels', 'Parties', 'CustomerLedger', 'Brokers', 'Gst', 'Gstr1',
+                'EInvoicePortal', 'CaPortal', 'Audit', 'Devices', 'ThermalPrinterSetup',
+                'UpiQrSetup', 'Users', 'PlatformHome', 'PlatformTenants', 'PlatformGrants',
+                'PlatformIncidents', 'PlatformPayouts', 'PlatformFlags'
+              ].includes(activeScreenId) && (
+                <GenericModuleView meta={activeMeta} onNavigate={selectScreen} />
+              )}
             </div>
           )}
         </main>

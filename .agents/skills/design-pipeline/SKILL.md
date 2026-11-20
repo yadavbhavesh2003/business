@@ -1,11 +1,12 @@
 ---
 name: design-pipeline
-description: 194-screen canvas build & export runbook.
+description: 194-screen React 19 + Vite canvas and monorepo runbook.
 ---
-# Design Pipeline — Canvas & Prototype Runbook
+# Design Pipeline — Pure React 19 + Vite Architecture
 
-## Protocol
-1. Templated screens reside in design/pages_*.py.
-2. Bespoke screens reside in design/bespoke/.
-3. Rebuild command: python3 gen.py out/project && cp bespoke/*.dc.html out/project/ && python3 layout.py out/project && python3 export.py
-4. Verification: python3 verify_pipeline.py ensures 194 boards and 0 broken links.
+## Modern Monorepo Protocol
+1. All 194 production screen definitions reside in `apps/web/src/screens-manifest.ts`.
+2. Interactive React components reside in `apps/web/src/client/`, `apps/web/src/platform/`, and `apps/mobile/src/screens/`.
+3. Rebuild command: `npx vite build apps/web`
+4. Verification: `npm test` runs 61+ unit and integration tests across web, mobile, core, and SQLite API.
+5. Zero dependency on legacy HTML exports or obsolete Python scripts.

@@ -128,8 +128,15 @@ class ApiClient {
   private baseUrl: string = '';
 
   constructor() {
-    // In browser, relative '/api/v1' uses Vite proxy in dev and same-origin in prod
-    this.baseUrl = '/api/v1';
+    const envUrl = typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_API_URL;
+    if (envUrl) {
+      this.baseUrl = `${envUrl}/api/v1`;
+    } else if (typeof window !== 'undefined' && window.location.port !== '3000' && window.location.port !== '5173') {
+      // Direct access via Apache (e.g. port 80/8080/XAMPP) connects directly to REST API on 3000
+      this.baseUrl = 'http://localhost:3000/api/v1';
+    } else {
+      this.baseUrl = '/api/v1';
+    }
   }
 
   private async fetchJson<T>(path: string, options?: RequestInit): Promise<T> {
@@ -562,3 +569,4 @@ class ApiClient {
 }
 
 export const apiClient = new ApiClient();
+export const api = apiClient;
