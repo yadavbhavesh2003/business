@@ -1,0 +1,9 @@
+node_modules/
+dist/
+apps/*/dist/
+.turbo/
+*.log
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc

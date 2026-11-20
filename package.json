@@ -1,0 +1,22 @@
+{
+  "name": "udyamos",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Offline-first Multi-Tenant ERP & POS for Retail & Wholesale MSMEs in Bharat",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "test": "node --experimental-strip-types --test packages/core/tests/*.test.ts apps/api/tests/*.test.ts apps/web/tests/*.test.ts apps/mobile/tests/*.test.ts tests/*.test.ts",
+    "dev:web": "vite apps/web",
+    "build:web": "vite build apps/web",
+    "preview:web": "vite preview apps/web",
+    "verify": "python archive/design/verify_pipeline.py"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4",
+    "vite": "^6.0.0"
+  }
+}

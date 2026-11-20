@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Approvals and sync review</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F6F7F5}
+a{color:#0F766E}a:hover{color:#0B5A54}
+</style>
+</helmet>
+<div style="font-family: Inter, system-ui, sans-serif; color: #15181C; background: #F6F7F5; min-height: 100vh; display: flex; flex-wrap: wrap; align-items: stretch">
+  <div style="flex: 1 1 232px; max-width: 100%; display: flex">
+    <dc-import name="Sidebar" active="Approvals" hint-size="232px,1700px"></dc-import>
+  </div>
+  <main style="flex: 999 1 640px; min-width: 0; box-sizing: border-box; padding: 24px 32px 48px">
+  <div style="max-width: 1180px; display: flex; flex-direction: column; gap: 24px">
+
+    <header style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <a href="Main.dc.html" style="font-size: 14px; font-weight: 600; text-decoration: none">← Dashboard</a>
+        <h1 style="margin: 0; font-size: 24px">Approvals &amp; sync review</h1>
+        <span style="font-size: 14px; color: #5B616B">Everything staff did that needs an owner's decision. Every action here is written to the audit log.</span>
+      </div>
+      <div role="tablist" aria-label="Review type" style="display: flex; flex-wrap: wrap; gap: 4px; background: #ECEEEA; padding: 4px; border-radius: 12px">
+        <sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+          <button type="button" role="tab" aria-selected="{{t.selected}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}} <span style="{{t.countStyle}}">{{t.count}}</span></button>
+        </sc-for>
+      </div>
+    </header>
+
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <sc-for list="{{items}}" as="it" hint-placeholder-count="5">
+        <article style="background: #FFFFFF; border: 1px solid #E3E5E1; border-radius: 14px; padding: 20px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center">
+          <div style="flex: 1 1 420px; display: flex; flex-direction: column; gap: 8px; min-width: 0">
+            <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
+              <span style="{{it.tagStyle}}">{{it.tag}}</span>
+              <span style="font-size: 13px; color: #5B616B">{{it.when}}</span>
+              <sc-if value="{{it.offline}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 600; color: #3C424B; background: #EEF0EC; border-radius: 6px; padding: 3px 8px">Created offline</span></sc-if>
+            </div>
+            <h2 style="margin: 0; font-size: 17px">{{it.title}}</h2>
+            <span style="font-size: 14px; color: #3C424B">{{it.detail}}</span>
+          </div>
+          <dl style="flex: 1 1 280px; margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 16px; font-size: 13px">
+            <sc-for list="{{it.facts}}" as="f" hint-placeholder-count="4">
+              <div style="display: flex; flex-direction: column; gap: 2px"><dt style="color: #5B616B">{{f.k}}</dt><dd style="margin: 0; font-weight: 600">{{f.v}}</dd></div>
+            </sc-for>
+          </dl>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap">
+            <button type="button" style="height: 44px; padding: 0 16px; border-radius: 10px; border: 1px solid #DADDD8; background: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600">{{it.secondary}}</button>
+            <a href="{{it.href}}" style="height: 44px; padding: 0 18px; border-radius: 10px; background: #0F766E; color: #FFFFFF; font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; text-decoration: none">{{it.primary}}</a>
+          </div>
+        </article>
+      </sc-for>
+      <sc-if value="{{empty}}" hint-placeholder-val="{{false}}">
+        <div style="background: #FFFFFF; border: 1px dashed #DADDD8; border-radius: 14px; padding: 40px; text-align: center; color: #5B616B; font-size: 15px">Nothing waiting here. You're all caught up.</div>
+      </sc-if>
+    </div>
+
+    <p style="margin: 0; font-size: 13px; color: #5B616B">Approving needs your PIN or passkey (step-up). Rejected offline bills become a credit note, never a silent delete.</p>
+  </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { tab: 'all' }; }
+  renderVals() {
+    const tag = (bg, fg) => 'font-size: 12px; font-weight: 700; border-radius: 6px; padding: 4px 8px; background: ' + bg + '; color: ' + fg;
+    const orange = tag('#FDF1E4', '#9A3412'), blue = tag('#EEF0F7', '#2E3A75'), grey = tag('#EEF0EC', '#3C424B');
+    const all = [
+      { type: 'approval', tag: 'Discount over limit', tagStyle: orange, when: 'Today 3:12 pm · Counter 1', offline: false,
+        title: 'INV D01-001877 · Mahavir Cloth Store', detail: 'Kiran gave 14% on a ₹42,600 bill. Cashier limit is 8%. Bill is on hold until you decide.',
+        facts: [{k:'Requested by',v:'Kiran Solanki'},{k:'Discount',v:'₹5,964 (14%)'},{k:'Margin after',v:'6.2%'},{k:'Party overdue',v:'₹1,10,000'}], secondary: 'Reject', primary: 'Approve' },
+      { type: 'approval', tag: 'Stock adjustment', tagStyle: orange, when: 'Today 11:40 am · Godown phone', offline: true,
+        title: 'Lot RL-2210 · Rayon print 44" · −22 m', detail: 'Anil reports damaged roll during unloading. Photo attached.',
+        facts: [{k:'Requested by',v:'Anil Makwana'},{k:'Value',v:'₹3,960'},{k:'Reason',v:'Damaged'},{k:'Godown',v:'Godown 1'}], secondary: 'Reject', primary: 'Approve' },
+      { type: 'approval', tag: 'Invoice cancel', tagStyle: orange, when: 'Yesterday 6:05 pm · Counter 2', offline: false,
+        title: 'INV D02-001842 · Jay Ambe Garments', detail: 'Mehul wants to cancel: wrong party selected. A credit note will be created.',
+        facts: [{k:'Requested by',v:'Mehul Rathod'},{k:'Amount',v:'₹18,750'},{k:'Payment linked',v:'None'},{k:'GST period',v:'Nov 2026'}], secondary: 'Reject', primary: 'Approve cancel' },
+      { type: 'conflict', tag: 'Sync conflict', tagStyle: blue, when: 'Synced today 2:30 pm', offline: true,
+        title: 'Lot RL-2291 sold twice while offline', detail: 'Counter 1 sold 40 m and Godown phone sold 30 m of a 52 m roll. Both bills are valid; stock is now −18 m.',
+        facts: [{k:'Devices',v:'D01, D04'},{k:'Bills',v:'D01-001869, D04-000212'},{k:'Stock now',v:'−18 m'},{k:'Suggested',v:'Move from RL-2292'}], secondary: 'Open lot', primary: 'Transfer 18 m' },
+      { type: 'conflict', tag: 'Price changed', tagStyle: blue, when: 'Synced today 10:02 am', offline: true,
+        title: 'Old price used on 3 offline bills', detail: 'Price of Cotton cambric 58" changed at 9:15 am; Godown phone billed at the old rate until it synced.',
+        facts: [{k:'Device',v:'D04'},{k:'Difference',v:'₹1,140 total'},{k:'Bills',v:'3'},{k:'Status',v:'Posted'}], secondary: 'Keep as billed', primary: 'Raise debit notes' },
+      { type: 'device', tag: 'Device', tagStyle: grey, when: 'Last seen Tue 6:40 pm', offline: false,
+        title: 'Godown phone has not synced for 2 days', detail: '14 events waiting on the device. If the phone is lost, revoke it: pending data uploads first, then it is wiped.',
+        facts: [{k:'Device',v:'Redmi 10 · D04'},{k:'User',v:'Anil Makwana'},{k:'Pending',v:'14 events'},{k:'App',v:'v1.0.3'}], secondary: 'Send reminder', primary: 'Revoke & wipe' }
+    ];
+    const tabsDef = [['all', 'All'], ['approval', 'Approvals'], ['conflict', 'Sync conflicts'], ['device', 'Devices']];
+    const tab = this.state.tab;
+    const tabs = tabsDef.map(([id, label]) => {
+      const sel = tab === id;
+      return {
+        label, selected: sel ? 'true' : 'false',
+        count: id === 'all' ? all.length : all.filter(x => x.type === id).length,
+        pick: () => this.setState({ tab: id }),
+        style: 'height: 40px; padding: 0 14px; border-radius: 9px; border: 0; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; ' + (sel ? 'background: #FFFFFF; color: #15181C; box-shadow: 0 1px 2px rgba(0,0,0,0.08)' : 'background: transparent; color: #3C424B'),
+        countStyle: 'margin-left: 6px; font-size: 12px; padding: 1px 7px; border-radius: 999px; background: ' + (sel ? '#15181C' : '#DADDD8') + '; color: ' + (sel ? '#FFFFFF' : '#15181C')
+      };
+    });
+    const items = (tab === 'all' ? all : all.filter(x => x.type === tab)).map((x) => Object.assign({ href: x.type === 'conflict' ? 'ConflictDetail.dc.html' : x.type === 'device' ? 'RevokeDevice.dc.html' : 'StepUp.dc.html' }, x));
+    return { tabs, items, empty: items.length === 0 };
+  }
+}
+</script>
+</body>
+</html>

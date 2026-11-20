@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UdyamOS — Modern React 19 ERP & POS System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Noto+Sans+Gujarati:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', 'Noto Sans Gujarati', sans-serif;
+      background: #0B0F19;
+      color: #F8FAFC;
+      line-height: 1.6;
+      padding: 32px 20px;
+    }
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: rgba(15, 118, 110, 0.2);
+      color: #2DD4BF;
+      border: 1px solid rgba(45, 212, 191, 0.3);
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 8px;
+    }
+    p.lead {
+      color: #94A3B8;
+      font-size: 15px;
+      margin-bottom: 24px;
+    }
+    .launch-card {
+      background: linear-gradient(135deg, #0F766E 0%, #115E59 100%);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      justifyContent: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+      box-shadow: 0 10px 25px -5px rgba(15, 118, 110, 0.4);
+    }
+    .launch-btn {
+      background: #FFFFFF;
+      color: #0F766E;
+      font-weight: 800;
+      padding: 14px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 15px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.15s ease;
+    }
+    .launch-btn:hover {
+      transform: translateY(-2px);
+    }
+    .terminal-box {
+      background: #15181C;
+      border: 1px solid #1E293B;
+      border-radius: 8px;
+      padding: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: #38BDF8;
+      margin-bottom: 32px;
+      display: flex;
+      justifyContent: space-between;
+      align-items: center;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: #15181C;
+      border: 1px solid #1E293B;
+      border-radius: 10px;
+      padding: 18px;
+    }
+    .card h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #E2E8F0;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card ul {
+      list-style: none;
+      font-size: 12px;
+      color: #94A3B8;
+    }
+    .card li {
+      padding: 4px 0;
+      border-bottom: 1px solid #1E293B;
+      display: flex;
+      justifyContent: space-between;
+    }
+    .status-ok {
+      color: #34D399;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="badge">React 19 + TypeScript Monorepo</div>
+    <h1>UdyamOS — ERP & POS System</h1>
+    <p class="lead">
+      Offline-First Multi-Tenant ERP & POS for Retail & Wholesale Textile Merchants in Bharat.
+      Compliant with Section 170 of the CGST Act, Indian Lakhs/Crores currency, and authentic Gujarati Unicode.
+    </p>
+
+    <!-- Main Launch Banner -->
+    <div class="launch-card">
+      <div>
+        <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 4px;">Launch React 19 Web Application</h2>
+        <p style="font-size: 13px; opacity: 0.9;">
+          Store Back-Office, Fast Counter POS (F2), Lot Inventory & SaaS Platform Admin Command Center.
+        </p>
+      </div>
+      <a href="http://localhost:5173" target="_blank" class="launch-btn">
+        Open Web App (localhost:5173) 🚀
+      </a>
+    </div>
+
+    <!-- Terminal Command Helper -->
+    <div class="terminal-box">
+      <div>
+        <span style="color: #64748B;"># To start the Vite dev server for browser and mobile testing:</span><br>
+        <span style="color: #E2E8F0;">npm run dev:web</span>
+      </div>
+      <span style="color: #34D399; font-size: 11px;">Port 5173 · LAN 0.0.0.0</span>
+    </div>
+
+    <!-- 6 Ported Module Blocks -->
+    <div class="grid">
+      <div class="card">
+        <h3>⚡ Sales & Billing (React 19)</h3>
+        <ul>
+          <li><span>Fast POS Billing (`InvoiceNew.tsx`)</span> <span class="status-ok">Ready</span></li>
+          <li><span>Section 170 Rupee Rounding</span> <span class="status-ok">Sec 170 CGST</span></li>
+          <li><span>Delivery Challans (`Challans.tsx`)</span> <span class="status-ok">Ready</span></li>
+          <li><span>Challan to Tax Bill Conversion</span> <span class="status-ok">Ready</span></li>
+          <li><span>Returns & Credit Notes (`CreditNotes.tsx`)</span> <span class="status-ok">Ready</span></li>
+          <li><span>Price Quotations (`Quotations.tsx`)</span> <span class="status-ok">Ready</span></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>📦 Inventory & Fabric Lots (React 19)</h3>
+        <ul>
+          <li><span>Lot Stock Summary (`Stock.tsx`)</span> <span class="status-ok">CRDT Guard</span></li>
+          <li><span>Wholesale Purchases (`Purchases.tsx`)</span> <span class="status-ok">Ready</span></li>
+          <li><span>Lot Cutting Modal (`LotCutModal.tsx`)</span> <span class="status-ok">Visual Cut</span></li>
+          <li><span>Thermal Barcode Stickers (`BarcodeLabels.tsx`)</span> <span class="status-ok">50x25mm</span></li>
+          <li><span>Physical Stock Audit (`StockCount.tsx`)</span> <span class="status-ok">Reconciled</span></li>
+          <li><span>Inter-Godown Transfer (`Transfer.tsx`)</span> <span class="status-ok">Challan</span></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>📖 Customer Khata & Ledgers (React 19)</h3>
+        <ul>
+          <li><span>Running Khata Statement (`CustomerLedger.tsx`)</span> <span class="status-ok">Ready</span></li>
+          <li><span>4-Bucket Debt Ageing (0–30, 31–60, 61–90, 90+)</span> <span class="status-ok">Automated</span></li>
+          <li><span>FIFO Payment Receipt (`PaymentReceipt.tsx`)</span> <span class="status-ok">Oldest First</span></li>
+          <li><span>WhatsApp Reminders (`wa.me`)</span> <span class="status-ok">Gujarati</span></li>
+          <li><span>Broker Commission Dalali (`Brokers.tsx`)</span> <span class="status-ok">Turnover %</span></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>🏛️ Compliance & CA Portal (React 19)</h3>
+        <ul>
+          <li><span>GSTR-1 Portal Table 4, 8 & 12</span> <span class="status-ok">Intra 50/50</span></li>
+          <li><span>NIC e-Invoice IRN & Signed QR</span> <span class="status-ok">NIC Ready</span></li>
+          <li><span>1-Click Tally Prime XML Export</span> <span class="status-ok">Voucher XML</span></li>
+          <li><span>Trial Balance (`કાચું સરવૈયું`)</span> <span class="status-ok">Section 170</span></li>
+          <li><span>Section 36 72-Month Audit Trail</span> <span class="status-ok">SHA-256</span></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>🖨️ Hardware & Settings (React 19)</h3>
+        <ul>
+          <li><span>Counter Device Manager (`Devices.tsx`)</span> <span class="status-ok">INV-D01 Prefix</span></li>
+          <li><span>ESC/POS 58mm/80mm Thermal Drivers</span> <span class="status-ok">Paper Cut</span></li>
+          <li><span>Dynamic NPCI UPI QR Generator</span> <span class="status-ok">Direct VPA</span></li>
+          <li><span>Staff Roles & 4-Digit POS PINs</span> <span class="status-ok">RBAC Guard</span></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>📱 Android POS & SaaS Admin (Expo + React)</h3>
+        <ul>
+          <li><span>React Native Counter POS (`apps/mobile`)</span> <span class="status-ok">SQLite Offline</span></li>
+          <li><span>Gujarati POS Touch Screen (`MobileBillingGu`)</span> <span class="status-ok">ગુજરાતી</span></li>
+          <li><span>SaaS Tenant Health & 30-Day Pilots</span> <span class="status-ok">Telemetry</span></li>
+          <li><span>Zero-Knowledge Support Grants</span> <span class="status-ok">Owner OTP</span></li>
+          <li><span>Incident War Room & Payouts</span> <span class="status-ok">Live Monitor</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+

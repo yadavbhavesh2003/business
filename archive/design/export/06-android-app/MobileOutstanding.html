@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Party outstanding</title>
+<script>window.DC_IMPORT_BASE = "../_shared/"; window.DC_WHERE = {"Main": "01-web-app-core", "Approvals": "01-web-app-core", "Invoices": "01-web-app-core", "Challans": "01-web-app-core", "Parties": "01-web-app-core", "Stock": "01-web-app-core", "Payments": "01-web-app-core", "Reports": "01-web-app-core", "Devices": "01-web-app-core", "Users": "01-web-app-core", "Settings": "01-web-app-core", "Sidebar": "_shared", "Profile": "02-web-app-all-modules", "Purchases": "02-web-app-all-modules", "Returns": "02-web-app-all-modules", "Expenses": "02-web-app-all-modules", "Accounts": "02-web-app-all-modules", "Gst": "02-web-app-all-modules", "Branches": "02-web-app-all-modules", "PriceLists": "02-web-app-all-modules", "Notifications": "02-web-app-all-modules", "Audit": "02-web-app-all-modules", "ImportExport": "02-web-app-all-modules", "Subscription": "02-web-app-all-modules", "Help": "02-web-app-all-modules", "Manufacturing": "02-web-app-all-modules", "Foundry": "02-web-app-all-modules", "Products": "03-web-app-forms-details", "ProductEdit": "03-web-app-forms-details", "InvoiceNew": "03-web-app-forms-details", "InvoiceView": "03-web-app-forms-details", "Quotations": "03-web-app-forms-details", "PartyView": "03-web-app-forms-details", "PartyEdit": "03-web-app-forms-details", "PurchaseNew": "03-web-app-forms-details", "StockCount": "03-web-app-forms-details", "RoleEdit": "03-web-app-forms-details", "UserInvite": "03-web-app-forms-details", "Dispatch": "03-web-app-forms-details", "ProfitReport": "03-web-app-forms-details", "States": "03-web-app-forms-details", "LoadingState": "03-web-app-forms-details", "ChallanConvert": "04-web-flows-dialogs", "CancelInvoice": "04-web-flows-dialogs", "WhatsAppShare": "04-web-flows-dialogs", "SupplierPay": "04-web-flows-dialogs", "Cheques": "04-web-flows-dialogs", "Transfer": "04-web-flows-dialogs", "ConflictDetail": "04-web-flows-dialogs", "SalesRegister": "04-web-flows-dialogs", "GstSummary": "04-web-flows-dialogs", "ImportWizard": "04-web-flows-dialogs", "RevokeDevice": "04-web-flows-dialogs", "SubscriptionLimit": "04-web-flows-dialogs", "EmptyDashboard": "04-web-flows-dialogs", "ChallanView": "04-web-flows-dialogs", "ReceiptView": "04-web-flows-dialogs", "ExpenseView": "04-web-flows-dialogs", "PriceListEdit": "04-web-flows-dialogs", "TemplateEdit": "04-web-flows-dialogs", "PrivacyRequests": "04-web-flows-dialogs", "TabletBilling": "04-web-flows-dialogs", "UpiCollections": "05-world-class-features", "Collections": "05-world-class-features", "Brokers": "05-world-class-features", "LedgerLink": "05-world-class-features", "BankMatch": "05-world-class-features", "CommandPalette": "05-world-class-features", "TrainingMode": "05-world-class-features", "LabelDesigner": "05-world-class-features", "Timeline": "05-world-class-features", "MobileVoiceHub": "05-world-class-features", "MobileReadAloud": "05-world-class-features", "MobileUpiQr": "05-world-class-features", "MobileCollections": "05-world-class-features", "MobileCustomerLedger": "05-world-class-features", "MobileSalesOrder": "05-world-class-features", "MobileBroker": "05-world-class-features", "MobileTraining": "05-world-class-features", "MobileLabels": "05-world-class-features", "MobileHome": "06-android-app", "MobileBilling": "06-android-app", "MobileManagerPin": "06-android-app", "MobileReceipt": "06-android-app", "MobileOutstanding": "06-android-app", "MobileDrawer": "06-android-app", "MobilePayment": "06-android-app", "MobileChallan": "06-android-app", "MobileStock": "06-android-app", "MobileSync": "06-android-app", "MobileBills": "06-android-app", "MobileBillView": "06-android-app", "MobileHeld": "06-android-app", "MobileSearch": "06-android-app", "MobileItems": "06-android-app", "MobileLowStock": "06-android-app", "MobileParty": "06-android-app", "MobilePartyView": "06-android-app", "MobilePartyAdd": "06-android-app", "MobileProductAdd": "06-android-app", "MobilePurchase": "06-android-app", "MobileQuotation": "06-android-app", "MobileReturn": "06-android-app", "MobileExpense": "06-android-app", "MobilePayments": "06-android-app", "MobileOwner": "06-android-app", "MobileApprovals": "06-android-app", "MobileReports": "06-android-app", "MobileDevices": "06-android-app", "MobileDispatch": "06-android-app", "MobileStockCount": "06-android-app", "MobilePrinter": "06-android-app", "MobileCloseDay": "06-android-app", "MobileProfile": "06-android-app", "MobileSettings": "06-android-app", "MobileNotifications": "06-android-app", "MobileMenu": "06-android-app", "MobileHelp": "06-android-app", "MobileSplash": "06-android-app", "MobileLoading": "06-android-app", "MobileConsent": "07-android-edge-cases-dialogs", "MobileForgotPin": "07-android-edge-cases-dialogs", "MobileLocked": "07-android-edge-cases-dialogs", "MobileWiped": "07-android-edge-cases-dialogs", "MobileGrantExpired": "07-android-edge-cases-dialogs", "MobileUpdate": "07-android-edge-cases-dialogs", "MobileStorageFull": "07-android-edge-cases-dialogs", "MobileSyncRejected": "07-android-edge-cases-dialogs", "MobileCancelBill": "07-android-edge-cases-dialogs", "MobileWhatsApp": "07-android-edge-cases-dialogs", "MobileReceiptPrint": "07-android-edge-cases-dialogs", "MobileChallanToBill": "07-android-edge-cases-dialogs", "MobileTransfer": "07-android-edge-cases-dialogs", "MobileStepUp": "07-android-edge-cases-dialogs", "MobileCopilotLimits": "07-android-edge-cases-dialogs", "MobileEmptyHome": "07-android-edge-cases-dialogs", "MobileHomeGu": "07-android-edge-cases-dialogs", "MobileBillingGu": "07-android-edge-cases-dialogs", "Copilot": "08-ai-voice-ocr", "MobileVoice": "08-ai-voice-ocr", "MobileCopilot": "08-ai-voice-ocr", "MobileScanBill": "08-ai-voice-ocr", "WebLogin": "09-login-setup", "WebConsent": "09-login-setup", "WebOnboarding": "09-login-setup", "WebOnbGodowns": "09-login-setup", "WebOnbStaff": "09-login-setup", "WebOnbPhones": "09-login-setup", "WebOnbImport": "09-login-setup", "Recovery": "09-login-setup", "StepUp": "09-login-setup", "MobileLanguage": "09-login-setup", "MobileRegister": "09-login-setup", "MobileLogin": "09-login-setup", "BomEdit": "10-later-releases", "ProductionOrder": "10-later-releases", "QualityCheck": "10-later-releases", "MeltBatchNew": "10-later-releases", "EInvoiceFlow": "10-later-releases", "MultiBranch": "10-later-releases", "PlatformHome": "11-platform-admin-our-team", "PlatformAnalytics": "11-platform-admin-our-team", "PlatformFunnel": "11-platform-admin-our-team", "PlatformTenants": "11-platform-admin-our-team", "PlatformTenant": "11-platform-admin-our-team", "PlatformSubscriptions": "11-platform-admin-our-team", "PlatformRenewals": "11-platform-admin-our-team", "PlatformPartners": "11-platform-admin-our-team", "PlatformBilling": "11-platform-admin-our-team", "PlatformPlans": "11-platform-admin-our-team", "PlatformPayouts": "11-platform-admin-our-team", "PlatformSupport": "11-platform-admin-our-team", "PlatformGrants": "11-platform-admin-our-team", "PlatformIncidents": "11-platform-admin-our-team", "PlatformDevices": "11-platform-admin-our-team", "PlatformReleases": "11-platform-admin-our-team", "PlatformFlags": "11-platform-admin-our-team", "PlatformBackups": "11-platform-admin-our-team", "PlatformMessaging": "11-platform-admin-our-team", "PlatformGst": "11-platform-admin-our-team", "PlatformUnits": "11-platform-admin-our-team", "PlatformTemplates": "11-platform-admin-our-team", "PlatformLanguages": "11-platform-admin-our-team", "PlatformPlanDefs": "11-platform-admin-our-team", "PlatformAudit": "11-platform-admin-our-team", "PlatformLogs": "11-platform-admin-our-team", "PlatformPrivacy": "11-platform-admin-our-team", "PlatformIntegrations": "11-platform-admin-our-team", "PlatformStaff": "11-platform-admin-our-team", "PlatformSettings": "11-platform-admin-our-team", "PlatformSidebar": "_shared", "AccountantHome": "12-client-role-dashboards", "MobileManagerHome": "12-client-role-dashboards", "MobileGodownHome": "12-client-role-dashboards"}; window.DC_HREF = function (n) { return "../" + (window.DC_WHERE[n] || "_missing") + "/" + n + ".html"; };</script>
+<script src="../_runtime/dc-runtime.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+Gujarati:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0F766E}a:hover{color:#0B5A54}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F6F7F5; font-family: Inter, 'Noto Sans Gujarati', system-ui, sans-serif; color: #15181C; display: flex; flex-direction: column; overflow: hidden">
+
+  <header style="background: #FFFFFF; border-bottom: 1px solid #E3E5E1; padding: 12px 12px 12px 4px; display: flex; align-items: center; gap: 4px">
+    <a href="../06-android-app/MobileHome.html" aria-label="Back" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#15181C" stroke-width="2.2" stroke-linecap="round"><path d="M15 5l-7 7 7 7"></path></svg>
+    </a>
+    <div style="flex: 1; display: flex; flex-direction: column">
+      <span style="font-size: 17px; font-weight: 700">Patel Sarees</span>
+      <span style="font-size: 14px; color: #5B616B">Surat · GSTIN 24ABCDE1234F1Z5</span>
+    </div>
+    <a href="../06-android-app/MobilePartyView.html" aria-label="Call party" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F766E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"></path></svg>
+    </a>
+  </header>
+
+  <main style="flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 12px">
+    <section style="background: #15181C; color: #FFFFFF; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end">
+        <div style="display: flex; flex-direction: column; gap: 2px">
+          <span style="font-size: 15px; color: #A9AFB8">Total due · કુલ બાકી</span>
+          <span style="font-size: 30px; font-weight: 700; letter-spacing: -0.02em">₹2,15,000</span>
+        </div>
+        <span style="font-size: 14px; font-weight: 700; border-radius: 6px; padding: 4px 8px; background: #F59E0B; color: #15181C">108% of limit</span>
+      </div>
+      <div aria-hidden="true" style="height: 8px; border-radius: 999px; background: #2B3038; overflow: hidden"><div style="height: 100%; width: 100%; background: #F59E0B"></div></div>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; font-size: 14px; color: #C9CDD3">
+        <div style="display: flex; flex-direction: column; gap: 2px"><span>Credit limit</span><span style="font-size: 16px; color: #FFFFFF; font-weight: 600">₹2,00,000</span></div>
+        <div style="display: flex; flex-direction: column; gap: 2px"><span>Credit days</span><span style="font-size: 16px; color: #FFFFFF; font-weight: 600">45</span></div>
+        <div style="display: flex; flex-direction: column; gap: 2px"><span>Oldest bill</span><span style="font-size: 16px; color: #FBD9A8; font-weight: 600">94 days</span></div>
+      </div>
+    </section>
+
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+      <a href="../06-android-app/MobilePayment.html" style="height: 52px; border-radius: 12px; background: #0F766E; color: #FFFFFF; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center; text-decoration: none">Receive payment</a>
+      <a href="../07-android-edge-cases-dialogs/MobileWhatsApp.html" style="height: 52px; border-radius: 12px; border: 1px solid #DADDD8; background: #FFFFFF; color: #15181C; font-size: 17px; font-weight: 600; display: flex; align-items: center; justify-content: center; text-decoration: none">WhatsApp reminder</a>
+    </div>
+
+    <section style="display: flex; flex-direction: column; gap: 8px">
+      <h2 style="margin: 0; font-size: 17px">Unpaid bills, oldest first</h2>
+      <sc-for list="{{bills}}" as="b" hint-placeholder-count="5">
+        <a href="../06-android-app/MobileBillView.html" style="display: flex; align-items: center; gap: 12px; background: #FFFFFF; border: 1px solid #E3E5E1; border-radius: 12px; padding: 10px 12px; min-height: 56px; box-sizing: border-box; text-decoration: none; color: #15181C">
+          <div style="flex: 1; display: flex; flex-direction: column">
+            <span style="font-size: 16px; font-weight: 600">{{b.no}}</span>
+            <span style="font-size: 14px; color: #5B616B">{{b.date}} · billed {{b.billed}}</span>
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px">
+            <span style="font-size: 16px; font-weight: 700">{{b.due}}</span>
+            <span style="{{b.chip}}">{{b.age}}</span>
+          </div>
+        </a>
+      </sc-for>
+    </section>
+  </main>
+
+  <nav aria-label="Main" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); background: #FFFFFF; border-top: 1px solid #E3E5E1; padding: 6px 4px 10px">
+    <sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+      <a href="{{t.href}}" style="{{t.style}}">
+        <span aria-hidden="true" style="{{t.bar}}"></span>
+        <span>{{t.label}}</span>
+      </a>
+    </sc-for>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const chip = (d) => 'font-size: 12px; font-weight: 700; border-radius: 6px; padding: 2px 6px; ' +
+      (d > 60 ? 'background: #FBE4D8; color: #7C2D12' : d > 45 ? 'background: #FDF1E4; color: #9A3412' : 'background: #EEF0EC; color: #3C424B');
+    const bills = [
+      ['INV D01-001512', '17 Aug', '₹62,400', '₹40,000', 94],
+      ['INV D02-001601', '3 Sep', '₹55,200', '₹55,200', 77],
+      ['INV D01-001688', '28 Sep', '₹48,900', '₹48,900', 52],
+      ['INV D01-001790', '30 Oct', '₹36,400', '₹36,400', 20],
+      ['INV D03-000418', '14 Nov', '₹34,500', '₹34,500', 5]
+    ].map(([no, date, billed, due, d]) => ({ no, date, billed, due, age: d + ' days', chip: chip(d) }));
+    const tabsDef = [['Home', '../06-android-app/MobileHome.html'], ['Bills', '../06-android-app/MobileBills.html'], ['🎤 Speak', '../05-world-class-features/MobileVoiceHub.html'], ['Parties', '../06-android-app/MobileOutstanding.html', true], ['Menu', '../06-android-app/MobileDrawer.html']];
+    const tabs = tabsDef.map(([label, href, act]) => ({
+      label, href,
+      style: 'display: flex; flex-direction: column; align-items: center; gap: 6px; min-height: 48px; justify-content: center; text-decoration: none; font-size: 14px; font-weight: 600; color: ' + (act ? '#0F766E' : '#5B616B'),
+      bar: 'width: 24px; height: 4px; border-radius: 999px; background: ' + (act ? '#0F766E' : 'transparent')
+    }));
+    return { bills, tabs };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "UdyamOS POS",
+    "slug": "udyamos-pos",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "jsEngine": "hermes",
+    "android": {
+      "package": "in.udyamos.pos",
+      "versionCode": 1,
+      "permissions": [
+        "android.permission.BLUETOOTH",
+        "android.permission.BLUETOOTH_ADMIN",
+        "android.permission.BLUETOOTH_CONNECT",
+        "android.permission.BLUETOOTH_SCAN",
+        "android.permission.CAMERA",
+        "android.permission.INTERNET"
+      ]
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow UdyamOS to scan roll barcodes"
+        }
+      ]
+    ]
+  }
+}
+
