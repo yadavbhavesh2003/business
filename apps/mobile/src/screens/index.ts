@@ -1,6 +1,5 @@
-export * from './MobileHome.js';
-export * from './MobileBilling.js';
-export * from './MobileBillingGu.js';
-export * from './MobileKhata.js';
-export * from './MobileCloseDay.js';
-
+export * from './MobileHome.tsx';
+export * from './MobileBilling.tsx';
+export * from './MobileBillingGu.tsx';
+export * from './MobileKhata.tsx';
+export * from './MobileCloseDay.tsx';

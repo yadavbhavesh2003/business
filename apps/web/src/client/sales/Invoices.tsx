@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { formatInr, generateInvoiceWhatsAppShare } from '@udyamos/core';
 import { Button, ERPTable, StatusBadge, colors, typography } from '@udyamos/ui';
+import { apiClient, type InvoiceRecord as ApiInvoiceRecord } from '../../api/client.ts';
 
 export interface InvoiceRecord {
   id: string;
@@ -24,69 +25,42 @@ export interface InvoicesProps {
 export const Invoices: React.FC<InvoicesProps> = ({ onNewInvoice, onViewInvoice }) => {
   const [filterMode, setFilterMode] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [invoices, setInvoices] = useState<InvoiceRecord[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const invoices: InvoiceRecord[] = [
-    {
-      id: 'inv-1',
-      billNo: 'INV-D01-001880',
-      date: '2026-11-20 15:42',
-      partyName: 'Shreeji Saree Depot',
-      partyMobile: '9825012345',
-      itemsSummary: 'Cotton 60s (40m) · Lot #L-8842',
-      taxableAmount: 2600,
-      taxAmount: 130,
-      totalAmount: 2730,
-      paymentMode: 'UPI',
-      syncStatus: 'synced'
-    },
-    {
-      id: 'inv-2',
-      billNo: 'INV-D01-001879',
-      date: '2026-11-20 14:15',
-      partyName: 'Cash Counter Sale',
-      partyMobile: '',
-      itemsSummary: 'Rayon Print (25m) · Lot #L-8831',
-      taxableAmount: 2125,
-      taxAmount: 106,
-      totalAmount: 2231,
-      paymentMode: 'Cash',
-      syncStatus: 'synced'
-    },
-    {
-      id: 'inv-3',
-      billNo: 'INV-D02-000450',
-      date: '2026-11-20 12:30',
-      partyName: 'Ambika Fashion',
-      partyMobile: '9825123456',
-      itemsSummary: 'Chanderi Silk (10m) · Lot #L-8790',
-      taxableAmount: 1400,
-      taxAmount: 70,
-      totalAmount: 1470,
-      paymentMode: 'Credit',
-      syncStatus: 'pending'
-    },
-    {
-      id: 'inv-4',
-      billNo: 'INV-D01-001878',
-      date: '2026-11-19 18:20',
-      partyName: 'Mahalaxmi Fabrics',
-      partyMobile: '9825234567',
-      itemsSummary: 'Pure Cambric 50s (50m) · Lot #L-8755',
-      taxableAmount: 4000,
-      taxAmount: 200,
-      totalAmount: 4200,
-      paymentMode: 'Credit',
-      syncStatus: 'synced'
+  const fetchInvoices = async () => {
+    try {
+      setLoading(true);
+      const data: ApiInvoiceRecord[] = await apiClient.getInvoices({
+        search: searchQuery,
+        paymentMode: filterMode
+      });
+
+      const mapped: InvoiceRecord[] = data.map((inv) => ({
+        id: inv.id,
+        billNo: inv.billNo,
+        date: inv.date,
+        partyName: inv.partyName,
+        partyMobile: inv.partyMobile || '',
+        itemsSummary: inv.itemsSummary,
+        taxableAmount: inv.taxableTotal,
+        taxAmount: (inv.cgstTotal || 0) + (inv.sgstTotal || 0) + (inv.igstTotal || 0),
+        totalAmount: inv.netPayable,
+        paymentMode: inv.paymentMode,
+        syncStatus: inv.syncStatus
+      }));
+
+      setInvoices(mapped);
+    } catch (err) {
+      console.error('Failed to fetch invoices:', err);
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
 
-  const filtered = invoices.filter((inv) => {
-    const matchesFilter = filterMode === 'all' || inv.paymentMode.toLowerCase() === filterMode.toLowerCase();
-    const matchesSearch =
-      inv.billNo.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      inv.partyName.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesFilter && matchesSearch;
-  });
+  useEffect(() => {
+    fetchInvoices();
+  }, [filterMode, searchQuery]);
 
   const columns = [
     { key: 'billNo', header: 'Bill No' },
@@ -144,48 +118,47 @@ export const Invoices: React.FC<InvoicesProps> = ({ onNewInvoice, onViewInvoice 
     {
       key: 'actions',
       header: 'Actions',
-      align: 'right' as const,
+      align: 'center' as const,
       render: (r: InvoiceRecord) => {
-        const waLink = r.partyMobile
-          ? generateInvoiceWhatsAppShare({
-              customerMobile: r.partyMobile,
-              customerName: r.partyName,
-              billNo: r.billNo,
-              grandTotal: r.totalAmount,
-              businessName: 'Radhe Radhe Textiles',
-              invoiceDownloadUrl: `https://udyamos.in/i/${r.billNo}`
-            })
-          : null;
+        const shareUrl = generateInvoiceWhatsAppShare({
+          customerPhone: r.partyMobile,
+          customerName: r.partyName,
+          billNo: r.billNo,
+          netPayable: r.totalAmount,
+          invoiceUrl: `https://biz.udyamos.in/b/${r.billNo}`,
+          isGujarati: true
+        });
 
         return (
-          <div style={{ display: 'flex', gap: '6px', justifyContent: 'flex-end' }}>
+          <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
             <Button
               size="sm"
-              variant="outline"
+              variant="secondary"
               onClick={() => onViewInvoice?.(r.billNo)}
             >
-              A4 View
+              View
             </Button>
-            {waLink && (
+            {r.partyMobile ? (
               <a
-                href={waLink}
+                href={shareUrl}
                 target="_blank"
                 rel="noreferrer"
                 style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
                   background: '#25D366',
                   color: '#FFFFFF',
                   padding: '4px 8px',
                   borderRadius: '4px',
-                  fontSize: '11px',
+                  fontSize: '12px',
                   fontWeight: 600,
-                  textDecoration: 'none',
-                  display: 'inline-flex',
-                  alignItems: 'center'
+                  textDecoration: 'none'
                 }}
+                title="Share invoice on WhatsApp in Gujarati"
               >
-                WhatsApp
+                WA
               </a>
-            )}
+            ) : null}
           </div>
         );
       }
@@ -193,75 +166,106 @@ export const Invoices: React.FC<InvoicesProps> = ({ onNewInvoice, onViewInvoice 
   ];
 
   return (
-    <div style={{ padding: '24px', background: colors.clientCanvas, minHeight: '100vh' }}>
-      {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '20px',
+        padding: '24px 32px',
+        background: '#F6F7F5',
+        minHeight: '100%',
+        boxSizing: 'border-box'
+      }}
+    >
+      {/* Top action bar */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
         <div>
-          <h1 style={{ ...typography.screenTitle, margin: '0 0 4px 0' }}>Sales Register & Tax Invoices</h1>
-          <p style={{ ...typography.subtitle, margin: 0 }}>
-            GST compliant tax invoices · Section 170 CGST Act rounded · Immutable counter sequence
+          <h2 style={{ ...typography.headingLarge, margin: 0 }}>Sales Invoices (વેચાણ બિલ)</h2>
+          <p style={{ ...typography.caption, color: colors.textSecondary, margin: '4px 0 0' }}>
+            Device-prefixed bills with Section 170 CGST+SGST rounding & WhatsApp sharing
           </p>
         </div>
-        <div style={{ display: 'flex', gap: '8px' }}>
+
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <Button variant="secondary" onClick={fetchInvoices}>
+            🔄 Refresh
+          </Button>
           <Button variant="primary" onClick={onNewInvoice}>
             + Create New Bill (F2)
           </Button>
         </div>
       </div>
 
-      {/* Filter and Search Bar */}
+      {/* Filter and Search */}
       <div
         style={{
-          background: '#FFFFFF',
-          padding: '12px 16px',
-          borderRadius: '8px',
-          border: '1px solid #E2E8F0',
-          marginBottom: '16px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          gap: '12px'
+          gap: '16px',
+          background: '#FFFFFF',
+          padding: '12px 16px',
+          borderRadius: '8px',
+          border: '1px solid #E3E5E1'
         }}
       >
-        <div style={{ display: 'flex', gap: '8px' }}>
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <span style={{ fontSize: '13px', fontWeight: 600, color: colors.textSecondary }}>Filter:</span>
           {['all', 'cash', 'upi', 'credit'].map((mode) => (
             <button
               key={mode}
               onClick={() => setFilterMode(mode)}
               style={{
-                background: filterMode === mode ? colors.clientPrimary : '#F1F5F9',
-                color: filterMode === mode ? '#FFFFFF' : colors.textPrimary,
+                background: filterMode === mode ? colors.clientPrimary : '#F1F3F0',
+                color: filterMode === mode ? '#FFFFFF' : '#15181C',
                 border: 'none',
-                padding: '6px 12px',
-                borderRadius: '6px',
+                borderRadius: '4px',
+                padding: '4px 12px',
                 fontSize: '12px',
                 fontWeight: 600,
+                textTransform: 'uppercase',
                 cursor: 'pointer'
               }}
             >
-              {mode.toUpperCase()}
+              {mode}
             </button>
           ))}
         </div>
-        <input
-          type="text"
-          placeholder="Search by Bill No (e.g. INV-D01) or Party..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          style={{
-            padding: '8px 12px',
-            fontSize: '12px',
-            border: '1px solid #CBD5E1',
-            borderRadius: '6px',
-            width: '280px',
-            outline: 'none'
-          }}
-        />
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: '280px' }}>
+          <input
+            type="text"
+            placeholder="Search bill no or party name…"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            style={{
+              width: '100%',
+              padding: '8px 12px',
+              fontSize: '13px',
+              border: '1px solid #DADDD8',
+              borderRadius: '6px',
+              outline: 'none'
+            }}
+          />
+        </div>
       </div>
 
-      {/* Invoice Table */}
-      <ERPTable columns={columns} data={filtered} />
+      {/* Table */}
+      <div
+        style={{
+          background: '#FFFFFF',
+          borderRadius: '8px',
+          border: '1px solid #E3E5E1',
+          overflow: 'hidden'
+        }}
+      >
+        <ERPTable
+          columns={columns}
+          data={invoices}
+          keyField="billNo"
+          emptyMessage={loading ? 'Loading sales invoices from backend…' : 'No invoices found matching criteria'}
+        />
+      </div>
     </div>
   );
 };
-

@@ -1,46 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ERPTable, StatusBadge, Button, colors, typography } from '@udyamos/ui';
-
-export interface LotItem {
-  lotId: string;
-  itemName: string;
-  godown: string;
-  thanCount: number; // Rolls / Than
-  metres: number;
-  ratePerMetre: number;
-  status: 'available' | 'low' | 'negative_conflict';
-}
+import { apiClient, type LotItem } from '../api/client.ts';
 
 export const ClientStock: React.FC = () => {
-  const lots: LotItem[] = [
-    {
-      lotId: 'LOT-CTN-601',
-      itemName: 'Cotton Than 60s (Surat Mill)',
-      godown: 'Godown 1 (Ring Road)',
-      thanCount: 14,
-      metres: 560,
-      ratePerMetre: 65,
-      status: 'available'
-    },
-    {
-      lotId: 'LOT-RYN-2291',
-      itemName: 'Rayon Floral Print 14kg',
-      godown: 'Godown 1 (Ring Road)',
-      thanCount: 0,
-      metres: -15, // Oversold offline across 2 devices!
-      ratePerMetre: 85,
-      status: 'negative_conflict'
-    },
-    {
-      lotId: 'LOT-CHN-440',
-      itemName: 'Chanderi Silk Jacquard Border',
-      godown: 'Godown 2 (Khatodara)',
-      thanCount: 2,
-      metres: 35,
-      ratePerMetre: 140,
-      status: 'low'
+  const [lots, setLots] = useState<LotItem[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const fetchStock = async () => {
+    try {
+      setLoading(true);
+      const data = await apiClient.getStock();
+      setLots(data);
+    } catch (err) {
+      console.error('Failed to fetch stock:', err);
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
+
+  useEffect(() => {
+    fetchStock();
+  }, []);
 
   const columns = [
     { key: 'lotId', header: 'Lot / Roll No' },
@@ -110,16 +90,21 @@ export const ClientStock: React.FC = () => {
         boxSizing: 'border-box'
       }}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
         <div>
           <h1 style={{ margin: 0, fontSize: '22px', fontWeight: 700, color: colors.client.textMain }}>
             Godown Lots & Fabric Rolls (થાણ / મીટર)
           </h1>
           <p style={{ margin: '4px 0 0', fontSize: '13px', color: colors.client.textMuted }}>
-            Multi-Godown Inventory · Lot-wise Batch Tracking & CRDT Offline Stock Reconciliation
+            {lots.length} Fabric Lots · Multi-Godown Inventory & CRDT Offline Stock Reconciliation
           </p>
         </div>
-        <Button variant="primary">+ Inward New Lot / Challan</Button>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <Button variant="secondary" onClick={fetchStock}>
+            🔄 Refresh
+          </Button>
+          <Button variant="primary">+ Inward New Lot / Challan</Button>
+        </div>
       </div>
 
       <ERPTable
@@ -130,4 +115,3 @@ export const ClientStock: React.FC = () => {
     </div>
   );
 };
-

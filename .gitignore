@@ -7,3 +7,6 @@ apps/*/dist/
 Thumbs.db
 __pycache__/
 *.pyc
+data/
+*.sqlite*
+*.db*
